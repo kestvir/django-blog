@@ -170,3 +170,5 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     }
 }
+
+django_heroku.settings(locals())
