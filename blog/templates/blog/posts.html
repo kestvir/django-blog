@@ -1,0 +1,133 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load social_share %}
+{% block content %}
+<div class="row mt-5">
+    <div class="col-lg-8 col-12 mt-1 mx-lg-4">
+        <section class="section classic-blog-listing">
+            {% for post in posts %}
+            <div class="row mb-5">
+                <!--Grid column-->
+                <div class="col-md-12">
+                    <!--Image-->
+                    <div class="view overlay z-depth-1 mb-3">
+                        <img src="{{post.image.url}}" class="img-fluid">
+                        <a href="{% url 'post-detail' post.id %}">
+                            <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                        </a>
+                    </div>
+
+                    <!--Excerpt-->
+                    <a href="{% url 'blog-category-posts' category=post.category %}" class="">
+                        <h5 class="text-center font-weight-bold teal-text mt-4">{{post.category}}</h5>
+                    </a>
+
+                    <h2 class="text-center font-weight-bold pb-3">
+                        <strong>{{post.title}}</strong>
+                    </h2>
+
+                    <p>{{post.first_three_sentences|safe}}
+                    </p>
+
+                    <div class="text-center pb-2">
+                        <a class="btn btn-grey btn-sm font-weight-bold btn-rounded waves-effect waves-light"
+                            href="{% url 'post-detail' post.id %}">Read
+                            more</a>
+                    </div>
+
+                    <hr style="margin-bottom: 0.5rem;">
+
+                    <!--Post data-->
+                    <div class="post-data mt-1 pt-1 grey-text">
+                        <div>
+                            <img style="width: 36px; height: 36px;" class="rounded-circle account-img mr-2"
+                                src="{{ post.author.profile.image.url }}">
+                            <p style="display: inline-block; font-weight: 400;">By
+                                <a href="{% url 'user-posts' post.author %}" class="teal-text">{{post.author}}</a>
+                                {{post.date_posted|date:"F d, Y"}}
+                                <a href="{% url 'post-detail' post.id %}#comments-list" class="dark-grey-text">
+                                    <i class="far fa-comments pr-2 pl-1"></i>{{post.comments_num}}</a>
+                            </p>
+                        </div>
+
+                        <ul class="list-unstyled list-inline circle-icons circle-icons-social">
+                            <!--Facebook-->
+                            <li class="list-inline-item mr-0">
+                                <a href="{% post_to_facebook post %}"
+                                    class="btn-floating btn-sm btn-fb waves-effect waves-light">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <!--Twitter-->
+                            <li class="list-inline-item mr-0">
+                                <a href="{% post_to_twitter post.title post %}"
+                                    class="btn-floating btn-sm  btn-tw waves-effect waves-light">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+                <!--Grid column-->
+            </div>
+            {% endfor%}
+        </section>
+
+        <!------------------------PAGINATION------------------------>
+        {% if is_paginated %}
+        <nav class="mb-5 pb-2">
+            <ul class="pagination pg-teal flex-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" aria-label="Previous" href="?page={{ page_obj.previous_page_number }}">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" aria-label="Previous" href="?page=1">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" aria-label="Previous" href="?page={{ page_obj.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" aria-label="Next" href="?page={{ page_obj.paginator.num_pages }}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+    </div>
+
+    <!------------------------SIDEBAR------------------------>
+    {% include "blog/sidebar.html" %}
+
+
+
+</div>
+{% endblock %}
