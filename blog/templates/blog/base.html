@@ -26,7 +26,7 @@
                 aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="basicNav">
+            <div class="collapse navbar-collapse" id="basicExampleNav">
                 <ul class="navbar-nav">
                     <li class="nav-item {% if request.resolver_match.url_name == 'blog-posts' %} active {% endif %}">
                         <a class="nav-item nav-link" href="{% url 'blog-posts' %}">Blog</a>

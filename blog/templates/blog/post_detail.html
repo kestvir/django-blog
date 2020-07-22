@@ -221,7 +221,7 @@
         <!--Section: Blog v.3-->
 
 
-
+        {% if user.profile %}
         <!--Comment FORM -->
         <section class="mb-4 wow fadeIn" data-wow-delay="0.2s"
             style="visibility: visible; animation-name: fadeIn; animation-delay: 0.2s;">
@@ -240,8 +240,10 @@
                 </div>
             </form>
             <!--Grid row-->
-
         </section>
+        {% else %}
+        <h3 class="font-weight-bold text-center my-5">You need to log in order to leave a comment</h3>
+        {% endif %}
 
     </div>
 
