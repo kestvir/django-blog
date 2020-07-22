@@ -225,7 +225,7 @@
         <!--Comment FORM -->
         <section class="mb-4 wow fadeIn" data-wow-delay="0.2s"
             style="visibility: visible; animation-name: fadeIn; animation-delay: 0.2s;">
-            <h3 class="font-weight-bold text-center my-5">Leave a comment</h3>
+            <h3 class="font-weight-bold text-center my-5">Leave a comment.</h3>
 
             <form id="comment-form" style="color: #757575;" method="POST">
                 {% csrf_token %}
@@ -242,7 +242,7 @@
             <!--Grid row-->
         </section>
         {% else %}
-        <h3 class="font-weight-bold text-center my-5">You need to log in order to leave a comment</h3>
+        <h3 class="font-weight-bold text-center my-5">You need to login, in order to leave a comment.</h3>
         {% endif %}
 
     </div>
