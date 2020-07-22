@@ -19,7 +19,7 @@ p {
     letter-spacing: 0.2rem;
 }
 
-#basicNav {
+#basicExampleNav {
     justify-content: flex-end;
 }
 
@@ -150,6 +150,15 @@ ul {
 
 .project-filter {
     text-align: center;
+}
+
+@media screen and (max-width: 892px) {
+    .navbar-nav {
+        align-items: flex-start;
+    }
+    .navbar .dropdown-menu {
+        left: 0;
+    }
 }
 
 /****** portfolio filter select *******/
