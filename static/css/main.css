@@ -283,17 +283,25 @@ li {
   margin-bottom: 1rem !important;
 }
 
+.comment-row {
+  margin-bottom: 5rem;
+}
+
 @media screen and (max-width: 768px) {
-  .comment-list img {
+  .comment-list .avatar {
     max-width: 75px;
   }
+  .comment-row {
+    margin-bottom: 2.5rem;
+  }
   .comment-info {
-    padding-left: 3rem;
+    padding-left: 2.5rem;
   }
 }
 
 @media screen and (max-width: 576px) {
   .comment-list {
+    padding-left: 0;
   }
 }
 
