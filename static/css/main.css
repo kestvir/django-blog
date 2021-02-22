@@ -63,6 +63,10 @@ p {
   padding: 0.5rem;
 }
 
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
 .navbar .dropdown-menu a {
   color: #000 !important;
   padding: 5px;
@@ -184,12 +188,12 @@ li {
   }
 }
 
-@media screen and (max-width: 356px) {
+@media screen and (max-width: 365px) {
   .post-data {
     flex-wrap: wrap;
   }
   .post-data .circle-icons {
-    margin-bottom: 0;
+    margin: 0 auto;
   }
   .post-data .btn-floating {
     margin: 3px;
