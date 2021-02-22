@@ -1,8 +1,9 @@
 {% extends "blog/base.html" %} 
-{% load static %} {% load social_share %} 
+{% load static %} 
+{% load social_share %} 
 {% load crispy_forms_tags %} 
 {% block content %}
-<div class="row mt-5 pt-3">
+<div class="row">
   <!--Main listing-->
   <div class="col-lg-8 col-12 mt-1 mx-lg-4">
     <!--Section: Blog v.3-->
@@ -164,7 +165,7 @@
                           {{comment.content}}
                         </p>
 
-                        {% if user %}
+                        {% if user.profile %}
                         <span
                           style="cursor: pointer"
                           class="reply-form-toggle text-primary"
@@ -213,7 +214,8 @@
                     </div>
                   </form>
 
-                  {% if comment.is_replies %} {% for child in comment.replies %}
+                  {% if comment.is_replies %} 
+                  {% for child in comment.replies %}
                   <div class="row justify-content-end mb-5">
                     <!--Image column-->
                     <div class="col-sm-2 col-12 mb-3">
