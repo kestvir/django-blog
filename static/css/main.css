@@ -287,6 +287,10 @@ li {
   margin-bottom: 5rem;
 }
 
+.comment-image-container {
+  text-align: center;
+}
+
 @media screen and (max-width: 768px) {
   .comment-list .avatar {
     max-width: 75px;
