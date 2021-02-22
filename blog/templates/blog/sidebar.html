@@ -1,129 +1,134 @@
-{% load static %}
-{% load blog_extras %}
-<div class="col-lg-3 col-12 mt-1 wow fadeIn" data-wow-delay="0.2s"
-    style="visibility: visible; animation-name: fadeIn; animation-delay: 0.2s;">
+{% load static %} {% load blog_extras %}
+<div
+  class="col-lg-3 col-12 mt-1 wow fadeIn"
+  data-wow-delay="0.2s"
+  style="visibility: visible; animation-name: fadeIn; animation-delay: 0.2s"
+>
+  <!-- Section: Featured posts -->
+  <section class="sidebar section widget-content">
+    <!--/ Card -->
+    <div class="card card-body pb-0">
+      <p
+        class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4"
+      >
+        <strong>POPULAR POSTS</strong>
+      </p>
 
-
-    <!-- Section: Featured posts -->
-    <section class="section widget-content">
-
-        <!--/ Card -->
-        <div class="card card-body pb-0">
-
-            <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
-                <strong>POPULAR POSTS</strong>
-
-            </p>
-
-            {% get_popular_posts as post_list %}
-            {% for post in post_list %}
-            <div class="single-post">
-                <!-- Grid row -->
-                <div class="row mb-4">
-                    <div class="col-5">
-
-                        <!-- Image -->
-                        <div class="view overlay">
-                            <img src="{{post.image.url}}" class="img-fluid z-depth-1 rounded-0"
-                                alt="{{post.title}} image">
-                            <a href="{% url 'post-detail' post.id %}">
-                                <div class="mask rgba-white-slight waves-effect waves-light"></div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Excerpt -->
-                    <div class="col-7">
-                        <h6 class="mt-0 font-small">
-                            <a style="color: rgb(33, 37, 41);" href="{% url 'post-detail' post.id %}">
-                                <strong>{{post.title}}</strong>
-                            </a>
-                        </h6>
-
-                        <div class="post-data">
-                            <p class="font-small grey-text mb-0">
-                                <i class="far fa-clock-o"></i>{{post.date_posted|date:"F d, Y"}}</p>
-                        </div>
-                    </div>
-                    <!--/ Excerpt -->
-                </div>
-                <!--/ Grid row -->
+      {% get_popular_posts as post_list %} {% for post in post_list %}
+      <div class="single-post">
+        <!-- Grid row -->
+        <div class="row mb-4">
+          <div class="col-5">
+            <!-- Image -->
+            <div class="view overlay">
+              <img
+                src="{{post.image.url}}"
+                class="img-fluid z-depth-1 rounded-0"
+                alt="{{post.title}} image"
+              />
+              <a href="{% url 'post-detail' post.id %}">
+                <div
+                  class="mask rgba-white-slight waves-effect waves-light"
+                ></div>
+              </a>
             </div>
-            {% endfor %}
+          </div>
+
+          <!-- Excerpt -->
+          <div class="col-7">
+            <h6 class="mt-0 font-small">
+              <a
+                style="color: rgb(33, 37, 41)"
+                href="{% url 'post-detail' post.id %}"
+              >
+                <strong>{{post.title}}</strong>
+              </a>
+            </h6>
+
+            <div class="post-data">
+              <p class="font-small grey-text mb-0">
+                <i class="far fa-clock-o"></i>{{post.date_posted|date:"F d, Y"}}
+              </p>
+            </div>
+          </div>
+          <!--/ Excerpt -->
         </div>
-    </section>
-    <!--/ Section: Featured posts -->
+        <!--/ Grid row -->
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <!--/ Section: Featured posts -->
 
-    <!-- Section: Categories -->
-    <section class="section my-5">
+  <!-- Section: Categories -->
+  <section class="section my-5">
+    <!--/ Card -->
+    <div class="card card-body pb-0">
+      <div class="single-post">
+        <p
+          class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4"
+        >
+          <strong>CATEGORIES</strong>
+        </p>
 
-        <!--/ Card -->
-        <div class="card card-body pb-0">
-            <div class="single-post">
+        <ul class="list-group my-4">
+          {% get_post_categories as categories_list %} {% for category in
+          categories_list %}
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <a
+              href="{% url 'blog-category-posts' category=category %}"
+              style="color: rgb(33, 37, 41)"
+            >
+              <p class="mb-0">{{category}}</p>
+            </a>
+            <span class="badge teal badge-pill font-small"
+              >{% get_num_of_category_posts category %}</span
+            >
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+  <!-- Section: Categories -->
+  <!--Archive-->
+  <section class="archive mb-5">
+    <!--/ Card -->
+    <div class="card card-body pb-0">
+      <div class="single-post">
+        <p
+          class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4"
+        >
+          <strong>ARCHIVE</strong>
+        </p>
 
-                <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
-                    <strong>CATEGORIES</strong>
+        <!--Grid row-->
+        <div class="row mb-4">
+          <!--Grid column-->
+          <div class="col-md-12 text-center">
+            <!--List-->
+            <ul class="list-unstyled">
+              {% get_post_archive as archive %} {% for date in archive %}
+              <li style="display: block">
+                <p class="mb-1 mt-2">
+                  <a
+                    href="{% url 'blog-date-posts' year=date.year month=date.month %}"
+                    >{{date|date:"F Y"}}</a
+                  >
                 </p>
-
-                <ul class="list-group my-4">
-                    {% get_post_categories as categories_list %}
-                    {% for category in categories_list %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="{% url 'blog-category-posts' category=category %}" style="color: rgb(33, 37, 41);">
-                            <p class="mb-0">{{category}}</p>
-                        </a>
-                        <span class="badge teal badge-pill font-small">{% get_num_of_category_posts category %}</span>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-
+              </li>
+              {% endfor %}
+            </ul>
+            <!--List-->
+          </div>
+          <!--Grid column-->
         </div>
-
-    </section>
-    <!-- Section: Categories -->
-    <!--Archive-->
-    <section class="archive mb-5">
-
-        <!--/ Card -->
-        <div class="card card-body pb-0">
-            <div class="single-post">
-
-                <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
-                    <strong>ARCHIVE</strong>
-                </p>
-
-                <!--Grid row-->
-                <div class="row mb-4">
-
-                    <!--Grid column-->
-                    <div class="col-md-12 text-center">
-                        <!--List-->
-                        <ul class="list-unstyled">
-                            {% get_post_archive as archive %}
-                            {% for date in archive %}
-                            <li style="display: block;">
-                                <p class="mb-1 mt-2">
-                                    <a
-                                        href="{% url 'blog-date-posts' year=date.year month=date.month %}">{{date|date:"F Y"}}</a>
-                                </p>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        <!--List-->
-
-                    </div>
-                    <!--Grid column-->
-
-                </div>
-                <!--Grid row-->
-
-            </div>
-
-        </div>
-        <!--/ Card -->
-
-    </section>
-    <!--Archive-->
-
+        <!--Grid row-->
+      </div>
+    </div>
+    <!--/ Card -->
+  </section>
+  <!--Archive-->
 </div>

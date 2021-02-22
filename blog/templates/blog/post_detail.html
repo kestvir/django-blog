@@ -1,254 +1,313 @@
-{% extends "blog/base.html" %}
-{% load static %}
-{% load social_share %}
-{% load crispy_forms_tags %}
-{% block content %}
+{% extends "blog/base.html" %} {% load static %} {% load social_share %} {% load
+crispy_forms_tags %} {% block content %}
 <div class="row mt-5 pt-3">
-
-    <!--Main listing-->
-    <div class="col-lg-8 col-12 mt-1 mx-lg-4">
-
-        <!--Section: Blog v.3-->
-        <section class="section classic-blog-listing">
-
-            <!--Grid row-->
-            <div class="row mb-4">
-
-                <!--Grid column-->
-                <div class="col-md-12">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="{{post.image.url}}" class="img-fluid post-detail-img" alt="{{post.title}} image">
-                            <a>
-                                <div class="mask rgba-white-slight waves-effect waves-light"></div>
-                            </a>
-                        </div>
-                        <!--/.Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body">
-                            {% if post.author == user %}
-                            <div class="d-flex justify-content-end">
-                                <a class="btn btn-danger btn-sm mt-1 mb-1"
-                                    href="{% url 'post-delete' post.id %}">Delete</a>
-                                <a class="btn btn-dark btn-sm mt-1 mb-1"
-                                    href="{% url 'post-update' post.id %}">Update</a>
-                            </div>
-
-                            <hr>
-                            {% endif %}
-                            <!--Title-->
-                            <div class="d-flex justify-content-between align-items-center ml-4">
-                                <h4 style="display: inline-block; margin-bottom: 0;" class="card-title">
-                                    <strong>{{post.title}}</strong>
-                                </h4>
-                                <span style="display: inline-block; font-weight: 400;">
-                                    <img style="width: 36px; height: 36px;" class="rounded-circle account-img mr-2"
-                                        src="{{ post.author.profile.image.url }}">
-                                    By
-                                    <a href="{% url 'user-posts' post.author %}" class="teal-text">{{post.author}}</a>
-                                    {{post.date_posted|date:"F d, Y"}}
-                                </span>
-                            </div>
-                            <hr>
-                            <!--Text-->
-                            <p class="dark-grey-text mb-3 mt-4 mx-4">{{post.content|safe}}</p>
-
-                            <!--Grid row-->
-
-                            <hr>
-
-                            <!--Grid row-->
-                            <div class="row mb-4">
-
-                                <!--Grid column-->
-                                <div class="col-md-12 text-center">
-
-                                    <h4 class="text-center font-weight-bold dark-grey-text mt-3 mb-3">
-                                        <strong>Share this post: </strong>
-                                    </h4>
-
-                                    <!--Facebook-->
-                                    <a href="{% post_to_facebook post %}" target="_blank" type="button"
-                                        class="btn btn-fb btn-sm waves-effect waves-light">
-                                        <i class="fab fa-facebook-f left"></i> Facebook</a>
-                                    <!--Twitter-->
-                                    <a href="{% post_to_twitter post.title post %}" type="button"
-                                        class="btn btn-tw btn-sm waves-effect waves-light">
-                                        <i class="fab fa-twitter left"></i> Twitter</a>
-                                    <!--Google -->
-
-                                </div>
-                                <!--Grid column-->
-
-                            </div>
-                            <!--Grid row-->
-
-                            <hr>
-
-                            <!--Comments-->
-                            <section>
-                                <!--Main wrapper-->
-                                <div id="comments-list" class="text-center text-md-left">
-                                    <div class="text-center my-5">
-                                        <h3 class="font-weight-bold">Comments
-                                            <span class="badge default-color">{{post.comments_num}}</span>
-                                        </h3>
-                                    </div>
-                                    <!--First row-->
-
-                                    {% for comment in post.ordered_by_date_comments %}
-                                    <div class="row mb-5">
-                                        <!--Image column-->
-                                        <div class="col-sm-2 col-12 mb-3">
-                                            <img src="{{ comment.author.profile.image.url}}"
-                                                class="avatar rounded-circle z-depth-1-half" alt="sample image">
-                                        </div>
-                                        <!--/.Image column-->
-
-                                        <!--Content column-->
-                                        <div class="col-sm-10 col-12 d-flex justify-content-between align-items-center">
-                                            <div class="post-info">
-                                                <a>
-                                                    <h5 class="user-name font-weight-bold">{{comment.author}}</h5>
-                                                </a>
-                                                <div class="card-data">
-                                                    <ul class="comment-list list-unstyled">
-                                                        <li class="comment-date font-small">
-                                                            <i
-                                                                class="far fa-clock-o"></i>{{comment.date_posted|date:"F d, Y"}}
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <p style="margin-bottom: 0.5rem;" class="dark-grey-text article">
-                                                    {{comment.content}}</p>
-                                                <span style="cursor: pointer;"
-                                                    class="reply-form-toggle text-primary">reply</span>
-                                            </div>
-                                            {% if post.author == user or comment.author == user %}
-                                            <div>
-                                                <a class="btn btn-danger btn-sm mt-1 mb-1 float-right"
-                                                    href="{% url 'comment-delete' pk1=post.id pk2=comment.id %}">Delete</a>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                        <!--/.Content column-->
-                                    </div>
-                                    <form style="display: none;" class="reply-form" style="color: #757575;"
-                                        method="POST">
-                                        {% csrf_token %}
-                                        <!--Grid row-->
-                                        <div class="row">
-
-                                            <!--Grid column-->
-                                            <div class="col-12 mb-4">
-                                                {{form|crispy}}
-                                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                                                <button class="btn btn-outline-default comment-submit float-right"
-                                                    type="submit">Post</button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    {% if comment.is_replies %}
-
-                                    {% for child in comment.replies %}
-                                    <div class="row justify-content-end mb-5">
-                                        <!--Image column-->
-                                        <div class="col-sm-2 col-12 mb-3">
-                                            <img src="{{ child.author.profile.image.url}}"
-                                                class="avatar rounded-circle z-depth-1-half" alt="sample image">
-                                        </div>
-                                        <!--/.Image column-->
-
-                                        <!--Content column-->
-                                        <div class="col-sm-8 col-12 d-flex justify-content-between align-items-center">
-                                            <div class="post-info">
-                                                <a>
-                                                    <h5 class="user-name font-weight-bold">{{child.author}}</h5>
-                                                </a>
-                                                <div class="card-data">
-                                                    <ul class="comment-list list-unstyled">
-                                                        <li class="comment-date font-small">
-                                                            <i
-                                                                class="far fa-clock-o"></i>{{child.date_posted|date:"F d, Y"}}
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <p class="dark-grey-text article">{{child.content}}</p>
-                                            </div>
-                                            {% if post.author == user or child.author == user %}
-                                            <div>
-                                                <a class="btn btn-danger btn-sm mt-1 mb-1 float-right"
-                                                    href="{% url 'comment-delete' pk1=post.id pk2=child.id %}">Delete</a>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                        <!--/.Content column-->
-                                    </div>
-
-                                    {% endfor %}
-
-                                    {% endif %}
-
-
-                                    {% endfor %}
-                                    <!--/.First row-->
-                                </div>
-                                <!--/.Main wrapper-->
-
-                            </section>
-                            <!--/.Comments-->
-
-
-                        </div>
-                        <!--/.Card content-->
-
-                    </div>
-                    <!--/.Card-->
-
-                </div>
-                <!--Grid column-->
-
+  <!--Main listing-->
+  <div class="col-lg-8 col-12 mt-1 mx-lg-4">
+    <!--Section: Blog v.3-->
+    <section class="section classic-blog-listing">
+      <!--Grid row-->
+      <div class="row mb-4">
+        <!--Grid column-->
+        <div class="col-md-12">
+          <!--Card-->
+          <div class="card">
+            <!--Card image-->
+            <div class="view overlay">
+              <img
+                src="{{post.image.url}}"
+                class="img-fluid post-detail-img"
+                alt="{{post.title}} image"
+              />
+              <a>
+                <div
+                  class="mask rgba-white-slight waves-effect waves-light"
+                ></div>
+              </a>
             </div>
-            <!--/Grid row-->
+            <!--/.Card image-->
 
-        </section>
-        <!--Section: Blog v.3-->
+            <!--Card content-->
+            <div class="card-body">
+              {% if post.author == user %}
+              <div class="d-flex justify-content-end">
+                <a
+                  class="btn btn-danger btn-sm mt-1 mb-1"
+                  href="{% url 'post-delete' post.id %}"
+                  >Delete</a
+                >
+                <a
+                  class="btn btn-dark btn-sm mt-1 mb-1"
+                  href="{% url 'post-update' post.id %}"
+                  >Update</a
+                >
+              </div>
 
+              <hr />
+              {% endif %}
+              <!--Title-->
+              <div
+                class="d-flex justify-content-between align-items-center ml-4"
+              >
+                <h4
+                  style="display: inline-block; margin-bottom: 0"
+                  class="card-title"
+                >
+                  <strong>{{post.title}}</strong>
+                </h4>
+                <span style="display: inline-block; font-weight: 400">
+                  <img
+                    style="width: 36px; height: 36px"
+                    class="rounded-circle account-img"
+                    src="{{ post.author.profile.image.url }}"
+                  />
+                  By
+                  <a href="{% url 'user-posts' post.author %}" class="teal-text"
+                    >{{post.author}}</a
+                  >
+                  {{post.date_posted|date:"F d, Y"}}
+                </span>
+              </div>
+              <hr />
+              <!--Text-->
+              <p class="dark-grey-text mb-3 mt-4 mx-4">{{post.content|safe}}</p>
 
-        {% if user.profile %}
-        <!--Comment FORM -->
-        <section class="mb-4 wow fadeIn" data-wow-delay="0.2s"
-            style="visibility: visible; animation-name: fadeIn; animation-delay: 0.2s;">
-            <h3 class="font-weight-bold text-center my-5">Leave a comment.</h3>
+              <!--Grid row-->
 
-            <form id="comment-form" style="color: #757575;" method="POST">
-                {% csrf_token %}
-                <!--Grid row-->
-                <div class="row">
+              <hr />
 
-                    <!--Grid column-->
-                    <div class="col-12 mb-4">
-                        {{form|crispy}}
-                        <button class="btn btn-outline-default comment-submit float-right" type="submit">Post</button>
-                    </div>
+              <!--Grid row-->
+              <div class="row mb-4">
+                <!--Grid column-->
+                <div class="col-md-12 text-center">
+                  <h4
+                    class="text-center font-weight-bold dark-grey-text mt-3 mb-3"
+                  >
+                    <strong>Share this post: </strong>
+                  </h4>
+
+                  <!--Facebook-->
+                  <a
+                    href="{% post_to_facebook post %}"
+                    target="_blank"
+                    type="button"
+                    class="btn btn-fb btn-sm waves-effect waves-light"
+                  >
+                    <i class="fab fa-facebook-f left"></i> Facebook</a
+                  >
+                  <!--Twitter-->
+                  <a
+                    href="{% post_to_twitter post.title post %}"
+                    type="button"
+                    class="btn btn-tw btn-sm waves-effect waves-light"
+                  >
+                    <i class="fab fa-twitter left"></i> Twitter</a
+                  >
+                  <!--Google -->
                 </div>
-            </form>
-            <!--Grid row-->
-        </section>
-        {% else %}
-        <h3 class="font-weight-bold text-center my-5">You need to login, in order to leave a comment.</h3>
-        {% endif %}
+                <!--Grid column-->
+              </div>
+              <!--Grid row-->
 
-    </div>
+              <hr />
 
-    <!------------------------SIDEBAR------------------------>
-    {% include 'blog/sidebar.html' %}
+              <!--Comments-->
+              <section>
+                <!--Main wrapper-->
+                <div id="comments-list" class="text-md-left">
+                  <div class="text-center my-5">
+                    <h3 class="font-weight-bold">
+                      Comments
+                      <span class="badge default-color"
+                        >{{post.comments_num}}</span
+                      >
+                    </h3>
+                  </div>
+                  <!--First row-->
 
+                  {% for comment in post.ordered_by_date_comments %}
+                  <div class="row mb-5">
+                    <!--Image column-->
+                    <div class="col-sm-2 col-12 mb-3">
+                      <img
+                        src="{{ comment.author.profile.image.url}}"
+                        class="avatar rounded-circle z-depth-1-half"
+                        alt="sample image"
+                      />
+                    </div>
+                    <!--/.Image column-->
+
+                    <!--Content column-->
+                    <div
+                      class="col-sm-10 col-12 d-flex justify-content-between align-items-center"
+                    >
+                      <div class="post-info">
+                        <a>
+                          <h5 class="user-name font-weight-bold">
+                            {{comment.author}}
+                          </h5>
+                        </a>
+                        <div class="card-data">
+                          <ul class="comment-list list-unstyled">
+                            <li class="comment-date font-small">
+                              <i class="far fa-clock-o"></i
+                              >{{comment.date_posted|date:"F d, Y"}}
+                            </li>
+                          </ul>
+                        </div>
+
+                        <p
+                          style="margin-bottom: 0.5rem"
+                          class="dark-grey-text article"
+                        >
+                          {{comment.content}}
+                        </p>
+
+                        {% if user %}
+                        <span
+                          style="cursor: pointer"
+                          class="reply-form-toggle text-primary"
+                        >
+                          reply
+                        </span>
+                        {% endif %}
+                      </div>
+
+                      {% if post.author == user or comment.author == user %}
+                      <div>
+                        <a
+                          class="btn btn-danger btn-sm mt-1 mb-1 float-right"
+                          href="{% url 'comment-delete' pk1=post.id pk2=comment.id %}"
+                          >Delete</a
+                        >
+                      </div>
+                      {% endif %}
+                    </div>
+                    <!--/.Content column-->
+                  </div>
+                  <form
+                    style="display: none"
+                    class="reply-form"
+                    style="color: #757575"
+                    method="POST"
+                  >
+                    {% csrf_token %}
+                    <!--Grid row-->
+                    <div class="row">
+                      <!--Grid column-->
+                      <div class="col-12 mb-4">
+                        {{form|crispy}}
+                        <input
+                          type="hidden"
+                          name="parent_id"
+                          value="{{ comment.id }}"
+                        />
+                        <button
+                          class="btn btn-outline-default comment-submit float-right"
+                          type="submit"
+                        >
+                          Post
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+
+                  {% if comment.is_replies %} {% for child in comment.replies %}
+                  <div class="row justify-content-end mb-5">
+                    <!--Image column-->
+                    <div class="col-sm-2 col-12 mb-3">
+                      <img
+                        src="{{ child.author.profile.image.url}}"
+                        class="avatar rounded-circle z-depth-1-half"
+                        alt="sample image"
+                      />
+                    </div>
+                    <!--/.Image column-->
+
+                    <!--Content column-->
+                    <div
+                      class="col-sm-8 col-12 d-flex justify-content-between align-items-center"
+                    >
+                      <div class="post-info">
+                        <a>
+                          <h5 class="user-name font-weight-bold">
+                            {{child.author}}
+                          </h5>
+                        </a>
+                        <div class="card-data">
+                          <ul class="comment-list list-unstyled">
+                            <li class="comment-date font-small">
+                              <i class="far fa-clock-o"></i
+                              >{{child.date_posted|date:"F d, Y"}}
+                            </li>
+                          </ul>
+                        </div>
+                        <p class="dark-grey-text article">{{child.content}}</p>
+                      </div>
+                      {% if post.author == user or child.author == user %}
+                      <div>
+                        <a
+                          class="btn btn-danger btn-sm mt-1 mb-1 float-right"
+                          href="{% url 'comment-delete' pk1=post.id pk2=child.id %}"
+                          >Delete</a
+                        >
+                      </div>
+                      {% endif %}
+                    </div>
+                    <!--/.Content column-->
+                  </div>
+
+                  {% endfor %} {% endif %} {% endfor %}
+                  <!--/.First row-->
+                </div>
+                <!--/.Main wrapper-->
+              </section>
+              <!--/.Comments-->
+            </div>
+            <!--/.Card content-->
+          </div>
+          <!--/.Card-->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--/Grid row-->
+    </section>
+    <!--Section: Blog v.3-->
+
+    {% if user.profile %}
+    <!--Comment FORM -->
+    <section
+      class="mb-4 wow fadeIn"
+      data-wow-delay="0.2s"
+      style="visibility: visible; animation-name: fadeIn; animation-delay: 0.2s"
+    >
+      <h3 class="font-weight-bold text-center my-5">Leave a comment.</h3>
+
+      <form id="comment-form" style="color: #757575" method="POST">
+        {% csrf_token %}
+        <!--Grid row-->
+        <div class="row">
+          <!--Grid column-->
+          <div class="col-12 mb-4">
+            {{form|crispy}}
+            <button
+              class="btn btn-outline-default comment-submit float-right"
+              type="submit"
+            >
+              Post
+            </button>
+          </div>
+        </div>
+      </form>
+      <!--Grid row-->
+    </section>
+    {% else %}
+    <h3 class="font-weight-bold text-center my-5">
+      You need to login, in order to leave a comment.
+    </h3>
+    {% endif %}
+  </div>
+
+  <!------------------------SIDEBAR------------------------>
+  {% include 'blog/sidebar.html' %}
 </div>
 {% endblock content %}
