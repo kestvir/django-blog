@@ -284,11 +284,13 @@ li {
 }
 
 .comment-row {
-  margin-bottom: 4rem;
+  padding: 0 12.5px;
+  margin-bottom: 2.5rem;
 }
 
 .comment-image-container {
   text-align: center;
+  margin-left: 1.8rem;
 }
 
 .child-comment {
@@ -312,7 +314,7 @@ li {
     padding-left: 0;
   }
   .child-comment {
-    margin-left: 80px;  
+    margin-left: 60px;  
 }
 
 /***** SIDEBAR *****/
