@@ -296,7 +296,7 @@ li {
 }
 
 @media screen and (max-width: 768px) {
-  .comment-list .avatar {
+  .comment-image-container .avatar {
     max-width: 75px;
   }
   .comment-row {
@@ -311,6 +311,8 @@ li {
   .comment-list {
     padding-left: 0;
   }
+  .child-comment {
+    margin-left: 80px;  
 }
 
 /***** SIDEBAR *****/
