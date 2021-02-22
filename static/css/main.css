@@ -290,7 +290,7 @@ li {
 
 .comment-image-container {
   text-align: center;
-  margin-left: 1.8rem;
+  margin-right: 1.5rem;
 }
 
 .child-comment {
@@ -304,9 +304,6 @@ li {
   .comment-row {
     margin-bottom: 2.5rem;
   }
-  .comment-info {
-    padding-left: 2.5rem;
-  }
 }
 
 @media screen and (max-width: 576px) {
@@ -316,6 +313,13 @@ li {
   .child-comment {
     margin-left: 60px;  
 }
+
+
+@media screen and (max-width: 349px) {
+    .child-comment {
+      margin-left: 30px;  
+  }
+
 
 /***** SIDEBAR *****/
 
