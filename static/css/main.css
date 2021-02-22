@@ -284,11 +284,15 @@ li {
 }
 
 .comment-row {
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
 }
 
 .comment-image-container {
   text-align: center;
+}
+
+.child-comment {
+  margin-left: 100px;
 }
 
 @media screen and (max-width: 768px) {
