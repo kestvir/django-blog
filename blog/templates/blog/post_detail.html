@@ -130,7 +130,7 @@
                   {% for comment in post.ordered_by_date_comments %}
                   <div class="row comment-row">
                     <!--Image column-->
-                    <div class="col-3 comment-image-container mb-3">
+                    <div class="comment-image-container mb-3">
                       <img
                         src="{{ comment.author.profile.image.url}}"
                         class="avatar rounded-circle z-depth-1-half"
@@ -141,7 +141,7 @@
 
                     <!--Content column-->
                     <div
-                      class="col-9 d-flex justify-content-between align-items-center"
+                      class="d-flex justify-content-between align-items-center"
                     >
                       <div class="comment-info">
                         <a>
@@ -218,7 +218,7 @@
                   {% for child in comment.replies %}
                   <div class="row comment-row child-comment justify-content-end mb-5">
                     <!--Image column-->
-                    <div class="col-3 comment-image-container mb-3">
+                    <div class="comment-image-container mb-3">
                       <img
                         src="{{ child.author.profile.image.url}}"
                         class="avatar rounded-circle z-depth-1-half"
@@ -229,7 +229,7 @@
 
                     <!--Content column-->
                     <div
-                      class="col-9 d-flex justify-content-between align-items-center"
+                      class="d-flex justify-content-between align-items-center"
                     >
                       <div class="comment-info">
                         <a>
