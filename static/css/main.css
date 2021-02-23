@@ -325,6 +325,12 @@ li {
   }
 }
 
+@media screen and (max-width: 339px) {
+  .child-comment {
+    margin-left: 6px;
+  }
+}
+
 /***** SIDEBAR *****/
 
 @media screen and (max-width: 992px) {
