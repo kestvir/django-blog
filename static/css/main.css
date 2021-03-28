@@ -392,10 +392,7 @@ li {
   border-radius: 10rem;
 }
 
-.read-more {
-  color: #fff;
-}
-
+.read-more,
 .read-more:hover {
   color: #fff;
 }
