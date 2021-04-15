@@ -10,7 +10,7 @@ https://awesome-django-blog.herokuapp.com/
 
 Django, AWS.
 
-## Features
+## User stories
 
 -   [x] Users have to be authenticated before writing posts.
 -   [x] Users can get, write, update and delete posts.
